@@ -5,9 +5,15 @@ import { FaPencilAlt, FaRegTrashAlt } from 'react-icons/fa';
 import { find } from 'lodash';
 import { feelingsList, privacyList } from '@services/utils/static.data';
 import '@components/posts/post/Post.scss';
+import PostCommentSection from '@components/posts/post-comment-section/PostCommentSection';
 import { useDispatch, useSelector } from 'react-redux';
+import ReactionsModal from '@components/posts/reactions/reactions-modal/ReactionsModal';
 import { Utils } from '@services/utils/utils.service';
+import useLocalStorage from '@hooks/useLocalStorage';
+import CommentInputBox from '@components/posts/comments/comment-input/CommentInputBox';
+import CommentsModal from '@components/posts/comments/comments-modal/CommentsModal';
 import { useState, useEffect } from 'react';
+import ImageModal from '@components/image-modal/ImageModal';
 import { openModal, toggleDeleteDialog } from '@redux/reducers/modal/modal.reducer';
 import { clearPost, updatePostItem } from '@redux/reducers/post/post.reducer';
 import Dialog from '@components/dialog/Dialog';
@@ -16,11 +22,11 @@ import { ImageUtils } from '@services/utils/image-utils.service';
 
 const Post = ({ post, showIcons }) => {
   const { _id } = useSelector((state) => state.post);
-  const { deleteDialogIsOpen } = useSelector((state) => state.modal);
+  const { reactionsModalIsOpen, commentsModalIsOpen, deleteDialogIsOpen } = useSelector((state) => state.modal);
   const [showImageModal, setShowImageModal] = useState(false);
-  // eslint-disable-next-line no-unused-vars
   const [imageUrl, setImageUrl] = useState('');
   const [backgroundImageColor, setBackgroundImageColor] = useState('');
+  const selectedPostId = useLocalStorage('selectedPostId', 'get');
   const dispatch = useDispatch();
 
   const getFeeling = (name) => {
@@ -73,6 +79,11 @@ const Post = ({ post, showIcons }) => {
 
   return (
     <>
+      {reactionsModalIsOpen && <ReactionsModal />}
+      {commentsModalIsOpen && <CommentsModal />}
+      {showImageModal && (
+        <ImageModal image={`${imageUrl}`} onCancel={() => setShowImageModal(!showImageModal)} showArrow={false} />
+      )}
       {deleteDialogIsOpen && (
         <Dialog
           title="Are you sure you want to delete this post?"
@@ -187,8 +198,10 @@ const Post = ({ post, showIcons }) => {
                 </div>
               )}
               {(post?.reactions.length > 0 || post?.commentsCount > 0) && <hr />}
+              <PostCommentSection post={post} />
             </div>
           </div>
+          {selectedPostId === post?._id && <CommentInputBox post={post} />}
         </div>
       </div>
     </>

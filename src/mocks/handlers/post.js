@@ -1,8 +1,7 @@
 import { postComment, postMockData } from '@mocks/data/post.mock';
-import { BASE_ENDPOINT } from '@services/axios';
 import { rest } from 'msw';
 
-const BASE_URL = `${BASE_ENDPOINT}/api/v1`;
+const BASE_URL = `${process.env.REACT_APP_BASE_ENDPOINT}/api/v1`;
 
 export const getPostsMock = rest.get(`${BASE_URL}/post/all/1`, (req, res, ctx) => {
   const result = { message: 'All posts', posts: [postMockData, postMockData], totalPosts: 2 };

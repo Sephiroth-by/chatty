@@ -4,6 +4,7 @@ import { userHandlers } from '@mocks/handlers//user';
 import { setupServer } from 'msw/node';
 import { giphyHandlers } from './handlers/giphy';
 import { postsHandlers } from './handlers/post';
+import { reactionHandlers } from './handlers/reactions';
 
 // Setup requests interception using the given handlers
 export const server = setupServer(
@@ -11,5 +12,6 @@ export const server = setupServer(
   ...notificationHandlers,
   ...userHandlers,
   ...giphyHandlers,
-  ...postsHandlers
+  ...postsHandlers,
+  ...reactionHandlers
 );

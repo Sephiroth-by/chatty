@@ -3,6 +3,7 @@ import { addUser, clearUser } from '@redux/reducers/user/user.reducer';
 import { APP_ENVIRONMENT } from '@services/axios';
 import { avatarColors } from '@services/utils/static.data';
 import { floor, random, some, findIndex } from 'lodash';
+import millify from 'millify';
 
 export class Utils {
   static avatarColor() {
@@ -119,6 +120,14 @@ export class Utils {
       }
     }
     return postReactions;
+  }
+
+  static shortenLargeNumbers(data) {
+    if (data === undefined) {
+      return 0;
+    } else {
+      return millify(data);
+    }
   }
 
   static getImage(imageId, imageVersion) {
