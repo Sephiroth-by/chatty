@@ -36,7 +36,7 @@ describe('PostForm', () => {
     expect(postModal).toBeInTheDocument();
   });
 
-  it('should have 3 list items', async () => {
+  it('should have 4 list items', async () => {
     render(<PostForm />);
     const listElement = await screen.findAllByTestId('list-item');
     expect(listElement[0].childNodes.length).toEqual(4);

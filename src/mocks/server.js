@@ -1,17 +1,21 @@
 import { authHandlers } from '@mocks/handlers/auth';
+import { followingHandlers } from '@mocks/handlers/following';
+import { giphyHandlers } from '@mocks/handlers/giphy';
 import { notificationHandlers } from '@mocks/handlers/notification';
-import { userHandlers } from '@mocks/handlers//user';
+import { postsHandlers } from '@mocks/handlers/post';
+import { reactionHandlers } from '@mocks/handlers/reactions';
+import { userHandlers } from '@mocks/handlers/user';
 import { setupServer } from 'msw/node';
-import { giphyHandlers } from './handlers/giphy';
-import { postsHandlers } from './handlers/post';
-import { reactionHandlers } from './handlers/reactions';
+import { imagesHandlers } from './handlers/images';
 
 // Setup requests interception using the given handlers
 export const server = setupServer(
   ...authHandlers,
-  ...notificationHandlers,
   ...userHandlers,
+  ...notificationHandlers,
   ...giphyHandlers,
   ...postsHandlers,
-  ...reactionHandlers
+  ...reactionHandlers,
+  ...followingHandlers,
+  ...imagesHandlers
 );
