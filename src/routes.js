@@ -7,6 +7,7 @@ import StreamsSkeleton from '@pages/social/streams/StreamsSkeleton';
 import NotificationSkeleton from '@pages/social/notifications/NotificationSkeleton';
 import CardSkeleton from '@components/card-element/CardSkeleton';
 import PhotoSkeleton from '@pages/social/photos/PhotoSkeleton';
+import ChatSkeleton from '@pages/social/chat/ChatSkeleton';
 
 const Social = lazy(() => import('@pages/social/Social'));
 const Chat = lazy(() => import('@pages/social/chat/Chat'));
@@ -52,7 +53,7 @@ export const AppRouter = () => {
         {
           path: 'chat/messages',
           element: (
-            <Suspense>
+            <Suspense fallback={<ChatSkeleton />}>
               <Chat />
             </Suspense>
           )
@@ -68,8 +69,8 @@ export const AppRouter = () => {
         {
           path: 'followers',
           element: (
-            <Suspense>
-              <Followers fallback={<CardSkeleton />} />
+            <Suspense fallback={<CardSkeleton />}>
+              <Followers />
             </Suspense>
           )
         },

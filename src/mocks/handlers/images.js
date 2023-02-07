@@ -1,8 +1,7 @@
 import { imageMock } from '@mocks/data/images.mock';
-import { BASE_ENDPOINT } from '@services/axios';
 import { rest } from 'msw';
 
-const BASE_URL = `${BASE_ENDPOINT}/api/v1`;
+const BASE_URL = `${process.env.REACT_APP_BASE_ENDPOINT}/api/v1`;
 
 export const getUserImagesMock = rest.get(`${BASE_URL}/images/60263f14648fed5246e322d9`, (req, res, ctx) => {
   const result = { message: 'User images', images: [imageMock] };
